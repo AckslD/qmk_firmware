@@ -39,6 +39,17 @@ quantum/version.h
 # kbfirmware....
 /keyboards/**/kb.h
 /keyboards/**/kb.c
+/keyboards/*/Makefile
+/keyboards/*/*/Makefile
+/keyboards/*/*/*/Makefile
+/keyboards/*/*/*/*/Makefile
+/keyboards/*/*/*/*/*/Makefile
+/keyboards/*/keymaps/Makefile
+/keyboards/*/*/keymaps/Makefile
+/keyboards/*/*/*/keymaps/Makefile
+/keyboards/*/*/*/*/keymaps/Makefile
+/keyboards/*/*/*/*/*/keymaps/Makefile
+.ccls-cache
 
 # Eclipse/PyCharm/Other IDE Settings
 *.iml
