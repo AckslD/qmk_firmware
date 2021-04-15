@@ -24,6 +24,7 @@ enum layers {
     _RGB,
     _UNICODE,
     _MOUSE,
+    _COLEMAK,
 };
 
 enum unicode_names {
@@ -53,21 +54,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  | \   |
+ * | Adjust |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  | \   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * | Mouse  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |LShift|RGB   |  |Ctrsht|LShift|   N  |   M  | ,  < | . >  | /  ? |  - _   |
+ * | Unicode|   Z  |   X  |   C  |   V  |   B  |RGB   |XXX   |  |Ctrsht|Colmak|   N  |   M  | ,  < | . >  | /  ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | ENC  | Del  | Enter| Esc  |      |  |      | Space| Tab  | Bksp | ENC  |
- *                        |      | Mouse| Alt  | Raise| Meta |  | Ctrl | Lower| Adjst| Unico|      |
+ *                        |      | Raise| Lower| LAlt | Meta |  | LCtrl| LShft| Lower| Raise|      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      XXXXXXX,   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_PIPE,
-      XXXXXXX,   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      KC_LSFT,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_LSFT,   MO(_RGB),           C_S_T(KC_NO), KC_LSFT, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-      XXXXXXX, LT(_MOUSE, KC_DEL), MT(MOD_LALT, KC_ENT), LT(_RAISE, KC_ESC), KC_LGUI,   KC_LCTRL, LT(_LOWER, KC_SPC), LT(_ADJUST, KC_TAB),  LT(_UNICODE, KC_BSPC), XXXXXXX
+      MO(_ADJUST),  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_PIPE,
+      MO(_MOUSE),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+      MO(_UNICODE), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), TG(_COLEMAK), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+      XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LALT_T(KC_ESC), KC_LGUI,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_TAB),  LT(_RAISE, KC_BSPC), XXXXXXX
     ),
 /*
  * Lower Layer: Symbols
@@ -95,6 +96,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |                              |      |  4   |  5   |  6   |      |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  | ____ |      |  0   |  1   |  2   |  3   |      |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      | Del  | Enter| ____ | ____ |  | ____ | Space| Tab  | Bksp |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_RAISE] = LAYOUT(
+      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, KC_4,    KC_5,    KC_6, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX,
+                                 XXXXXXX, KC_DEL,  KC_ENT,  _______, _______,   _______, KC_SPC,  KC_TAB,  KC_BSPC, XXXXXXX
+    ),
+/*
+ * Adjust Layer: Function keys, RGB
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * | F1     | F2   |  F3  | F4   | F5   | F6   |                              | F7   | F8   |  F9  | F10  | F11  | F12    |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      | Prev | Play | Next | VolUp|                              | Left | Down | Up   | Right|      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |      |      |      | Mute | VolDn|      |      |  |      |      |      | PgDn | PgUp |      |      |        |
@@ -103,51 +124,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_RAISE] = LAYOUT(
-      XXXXXXX, KC_1, 	  KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-      XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDOWN, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-    ),
-/*
- * Adjust Layer: Function keys, RGB
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | F1   |  F2  | F3   | F4   | F5   |                              | F6   | F7   |  F8  | F9   | F10  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        | TOG  | SAI  | HUI  | VAI  | MOD  |                              |      |      |      | F11  | F12  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      | SAD  | HUD  | VAD  | RMOD |      |      |  |      |      |      |      |      |      |      |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
     [_ADJUST] = LAYOUT(
-      XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  XXXXXXX,
-      XXXXXXX, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     XXXXXXX, XXXXXXX, XXXXXXX, KC_F11,  KC_F12,  XXXXXXX,
-      XXXXXXX, XXXXXXX, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                         KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+      XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                       KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDOWN, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX,
+                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 /*
  * LED RGB layer
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      |      |      | TOGGL|      |        |
+ * |        |      |      |      | RESET| TOGGL|                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      | SATUR|      |      |      |                              | HUI  | NEXTM| PREVM|      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |      |      |      |      | BRIGH|      |      |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      | ____ |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RGB] = LAYOUT(
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_M_P, RGB_TOG,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
       XXXXXXX, XXXXXXX, RGB_SAI, XXXXXXX, XXXXXXX, XXXXXXX,                                     RGB_HUI, RGB_MOD, RGB_RMOD, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_VAI, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_VAI, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 /*
  * Unicode, emoji layer
@@ -175,21 +176,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              | MLeft| Mdown| Mup  |MRight|      |        |
+ * |        | MACC0| MACC1| MACC2|      |      |                              | MLeft| Mdown| Mup  |MRight|      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * |        |      |      |      |      |      |      |      |  |      |      |      | WHDwn| WHUp |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  | MLClk| MRClk|      |      |      |
+ *                        |      |      |      |      |      |  | ____ | ____ | MLClk| MRClk|      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_MOUSE] = LAYOUT(
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             KC_MS_L, KS_MS_D, KS_MS_U, KS_MS_R, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   KS_MS_BTN1, KS_MS_BTN3, XXXXXXX, XXXXXXX, XXXXXXX
+      XXXXXXX, KC_MS_ACCEL0, KC_MS_ACCEL1, KC_MS_ACCEL2, XXXXXXX, XXXXXXX,                              KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       XXXXXXX, KC_WH_D, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX,
+                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, _______, KC_MS_BTN1, KC_MS_BTN3, XXXXXXX
     ),
-// /*
+/*
+ * Colemak layer
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * | ______ |   Q  |   W  |   F  |   P  |   G  |                              |   J  |   L  |   U  |   Y  | ;  : |  | \   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | ______ |   A  |   R  |   S  |   T  |   D  |                              |   H  |   N  |   E  |   I  |   O  |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | ______ |   Z  |   X  |   C  |   V  |   B  | ____ |      |  | ____ | ____ |   K  |   M  | ,  < | . >  | /  ? |  - _   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      | ____ | ____ | ____ | ____ |  | ____ | ____ | ____ | ____ |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_COLEMAK] = LAYOUT(
+      _______,   KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,                                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_PIPE,
+      _______,   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
+      _______,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   _______,   XXXXXXX,           _______, _______, KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+                                 XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX
+    ),
+/*
 //  * layer template
 //  *
 //  * ,-------------------------------------------.                              ,-------------------------------------------.
@@ -203,7 +224,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  *                        |      |      |      |      |      |  |      |      |      |      |      |
 //  *                        `----------------------------------'  `----------------------------------'
 //  */
-//     [_layerindex] = layout(
+//     [_LAYERINDEX] = LAYOUT(
 //       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
 //       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
 //       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -252,7 +273,7 @@ static void render_status(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
+            oled_write_P(PSTR("Qwerty\n"), false);
             break;
         case _LOWER:
             oled_write_P(PSTR("Lower\n"), false);
@@ -262,6 +283,20 @@ static void render_status(void) {
             break;
         case _ADJUST:
             oled_write_P(PSTR("Adjust\n"), false);
+            break;
+        case _RGB:
+            oled_write_P(PSTR("RGB ("), false);
+            oled_write_char(rgblight_get_mode() + '0', false);
+            oled_write_P(PSTR(")\n"), false);
+            break;
+        case _UNICODE:
+            oled_write_P(PSTR("Unicode\n"), false);
+            break;
+        case _MOUSE:
+            oled_write_P(PSTR("Mouse\n"), false);
+            break;
+        case _COLEMAK:
+            oled_write_P(PSTR("Colemak\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
