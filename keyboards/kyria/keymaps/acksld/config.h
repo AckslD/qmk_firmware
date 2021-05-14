@@ -16,6 +16,13 @@
 
 #pragma once
 
+#define PERMISSIVE_HOLD // trigger mod if another key pressed even if within tapping term
+/* #define IGNORE_MOD_TAP_INTERRUPT // help with rolling motion eg for space after letter */
+// effectively enables permissive hold also for layers
+/* #undef TAPPING_TERM */
+/* #define TAPPING_TERM 10 */
+/* #define RETRO_TAPPING */
+
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
 #endif
@@ -26,6 +33,10 @@
   #define RGBLIGHT_SAT_STEP 8
   #define RGBLIGHT_VAL_STEP 8
   #define RGBLIGHT_LIMIT_VAL 150
+#endif
+
+#ifdef UNICODEMAP_ENABLE
+  #define UNICODE_SELECTED_MODES UC_LNX
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
