@@ -16,12 +16,12 @@
 
 #pragma once
 
-#define PERMISSIVE_HOLD // trigger mod if another key pressed even if within tapping term
+/* #define PERMISSIVE_HOLD // trigger mod if another key pressed even if within tapping term */
 /* #define IGNORE_MOD_TAP_INTERRUPT // help with rolling motion eg for space after letter */
 // effectively enables permissive hold also for layers
-/* #undef TAPPING_TERM */
-/* #define TAPPING_TERM 10 */
-/* #define RETRO_TAPPING */
+#undef TAPPING_TERM
+#define TAPPING_TERM 10
+#define RETRO_TAPPING
 
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
