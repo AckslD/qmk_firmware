@@ -22,32 +22,32 @@ enum layers {
     _RAISE,
     _ADJUST,
     _RGB,
-    _UNICODE,
+    // _UNICODE,
     _MOUSE,
     _QWERTY,
 };
 
-enum unicode_names {
-    SAD,
-    VERY_SAD,
-    HAPPY,
-    VERY_HAPPY,
-    THUMBD,
-    THUMBU,
-    LIGHTB,
-    CELEBRATE,
-};
+// enum unicode_names {
+//     SAD,
+//     VERY_SAD,
+//     HAPPY,
+//     VERY_HAPPY,
+//     THUMBD,
+//     THUMBU,
+//     LIGHTB,
+//     CELEBRATE,
+// };
 
-const uint32_t PROGMEM unicode_map[] = {
-    [SAD]  = 0x1f622, // 😢
-    [VERY_SAD] = 0x1f62d, // 😭
-    [HAPPY] = 0x1f642, // 🙂
-    [VERY_HAPPY] = 0x1f600, // 😀
-    [THUMBD] = 0x1f44d, // 👍
-    [THUMBU] = 0x1f44e, // 👎
-    [LIGHTB] = 0x1f4a1, // 💡
-    [CELEBRATE] = 0x1f389, // 🎉
-};
+// const uint32_t PROGMEM unicode_map[] = {
+//     [SAD]  = 0x1f622, // 😢
+//     [VERY_SAD] = 0x1f62d, // 😭
+//     [HAPPY] = 0x1f642, // 🙂
+//     [VERY_HAPPY] = 0x1f600, // 😀
+//     [THUMBD] = 0x1f44d, // 👍
+//     [THUMBU] = 0x1f44e, // 👎
+//     [LIGHTB] = 0x1f4a1, // 💡
+//     [CELEBRATE] = 0x1f389, // 🎉
+// };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * | Mouse  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | :    |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | Unicode|   Z  |   X  |   C  |   V  |   B  |RGB   | XXX  |  |Ctrsht|Colmak|   N  |   M  | ,  < | . >  | /  ? |  _     |
+ * | Swap H |   Z  |   X  |   C  |   V  |   B  |RGB   | XXX  |  |Ctrsht|Colmak|   N  |   M  | ,  < | . >  | /  ? |  _     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | ENC  | Del  | Enter| Esc  |      |  |      | Space| Bksp | Tab  | ENC  |
  *                        |      | Raise| Lower| Meta | LAlt |  | LCtrl| LShft| Lower| Raise|      |
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
       MO(_ADJUST),  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
       MO(_MOUSE),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                      KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_QUOT,
-      MO(_UNICODE), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_COLEMAK), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
+      SH_TG,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_COLEMAK), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
       XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
 /*
@@ -123,14 +123,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |        |      |      |      | Mute | VolDn|      |      |  |      |      |      | PgDn | PgUp |      | F12  |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      | PSCR |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
       XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                         KC_F6,   KC_F7,   KC_F8,  KC_F9,   KC_F10,  XXXXXXX,
       XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                       KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_F11,  XXXXXXX,
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDOWN, KC_PGUP, XXXXXXX, KC_F12,  XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, _______, KC_PSCR, XXXXXXX, XXXXXXX
     ),
 /*
  * LED RGB layer
@@ -172,12 +172,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*   XXXXXXX, XXXXXXX, XXXXXXX, X(CELEBRATE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
     /*                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX */
     /* ), */
-    [_UNICODE] = LAYOUT(
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, X(LIGHTB), XXXXXXX, XXXXXXX, XXXXXXX, SE_ARNG,
-      XXXXXXX, XXXXXXX, XXXXXXX, XP(SAD, VERY_SAD), XXXXXXX, XXXXXXX,                    XP(HAPPY, VERY_HAPPY), X(THUMBD), X(THUMBU), XXXXXXX, SE_ODIA, SE_ADIA,
-      XXXXXXX, XXXXXXX, XXXXXXX, X(CELEBRATE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-    ),
+    // [_UNICODE] = LAYOUT(
+    //   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, X(LIGHTB), XXXXXXX, XXXXXXX, XXXXXXX, SE_ARNG,
+    //   XXXXXXX, XXXXXXX, XXXXXXX, XP(SAD, VERY_SAD), XXXXXXX, XXXXXXX,                    XP(HAPPY, VERY_HAPPY), X(THUMBD), X(THUMBU), XXXXXXX, SE_ODIA, SE_ADIA,
+    //   XXXXXXX, XXXXXXX, XXXXXXX, X(CELEBRATE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+    // ),
 /*
  * mouse layer
  *
@@ -212,7 +212,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * | Mouse  |   A  |   R  |   S  |   T  |   D  |                              |   H  |   N  |   E  |   I  |   O  |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | Unicode|   Z  |   X  |   C  |   V  |   B  | RGB  | XXX  |  |Ctrsht|Qwerty|   K  |   M  | ,  < | . >  | /  ? |  _     |
+ * | Swap H |   Z  |   X  |   C  |   V  |   B  | RGB  | XXX  |  |Ctrsht|Qwerty|   K  |   M  | ,  < | . >  | /  ? |  _     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | ENC  | Del  | Enter| Esc  |      |  |      | Space| Bksp | Tab  | ENC  |
  *                        |      | Raise| Lower| Meta | LAlt |  | LCtrl| LShft| Lower| Raise|      |
@@ -221,7 +221,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT(
       MO(_ADJUST),  KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,                                                     KC_J,    KC_L,    KC_U,    KC_Y,    KC_COLN, KC_BSLS,
       MO(_MOUSE),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                     KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-      MO(_UNICODE), KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
+      SH_TG,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
       /* XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_TAB), XXXXXXX */
       XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    LCTL_T(KC_BSPC), KC_LSFT, LT(_LOWER, KC_SPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
@@ -312,7 +312,7 @@ static void render_status(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case _QWERTY:
-            oled_write_P(PSTR("Colemak\n"), false);
+            oled_write_P(PSTR("Qwerty\n"), false);
             break;
         case _LOWER:
             oled_write_P(PSTR("Lower\n"), false);
@@ -328,9 +328,9 @@ static void render_status(void) {
             oled_write_char(rgblight_get_mode() + '0', false);
             oled_write_P(PSTR(")\n"), false);
             break;
-        case _UNICODE:
-            oled_write_P(PSTR("Unicode\n"), false);
-            break;
+        // case _UNICODE:
+        //     oled_write_P(PSTR("Unicode\n"), false);
+        //     break;
         case _MOUSE:
             oled_write_P(PSTR("Mouse\n"), false);
             break;
@@ -339,6 +339,14 @@ static void render_status(void) {
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
+    }
+
+    // TODO swap hands
+    oled_write_P(PSTR("Swapped: "), false);
+    if (swap_hands) {
+        oled_write_P(PSTR("true"), false);
+    } else {
+        oled_write_P(PSTR("false"), false);
     }
 
     // Host Keyboard LED Status
@@ -351,7 +359,7 @@ static void render_status(void) {
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
-    } else {
+    // } else {
         /* render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc) */
         /* render_kyria_logo(); */
     }
@@ -369,11 +377,31 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        // Page up/Page down
-        if (clockwise) {
-            tap_code(KC_PGDN);
+        if ((get_mods() & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT)) {
+            // if Alt -> Page up/Page down
+            if (clockwise) {
+                tap_code(KC_PGDN);
+            } else {
+                tap_code(KC_PGUP);
+            }
+        } else if ((get_mods() & MOD_BIT(KC_LSFT)) == MOD_BIT(KC_LSFT)) {
+            // if Shift -> Mouse scroll up/down faster
+            if (clockwise) {
+                for (int i=0; i<10; i++) {
+                    tap_code(KC_WH_D);
+                }
+            } else {
+                for (int i=0; i<10; i++) {
+                    tap_code(KC_WH_U);
+                }
+            }
         } else {
-            tap_code(KC_PGUP);
+            // otherwise -> Mouse scroll up/down
+            if (clockwise) {
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+            }
         }
     }
     return true;
