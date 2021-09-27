@@ -88,7 +88,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                       XXXXXXX, KC_UNDS, KC_QUES, XXXXXXX, XXXXXXX, XXXXXXX,
       XXXXXXX, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                        KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_SCLN, KC_DQUO,
       XXXXXXX, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, XXXXXXX, XXXXXXX,   _______, XXXXXXX, KC_AMPR, KC_EQL,  KC_LABK, KC_RABK,  KC_BSLS, XXXXXXX,
-                                 /* XXXXXXX, KC_DEL,  KC_ENT,  _______, _______,   _______, KC_SPC,  KC_BSPC, KC_TAB,  XXXXXXX */
                                  XXXXXXX, KC_DEL,  KC_ENT,  _______, _______,   KC_BSPC, _______,  KC_SPC, KC_TAB,  XXXXXXX
     ),
 /*
@@ -109,7 +108,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3, XXXXXXX,                                       KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
       XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6, KC_0,                                          KC_H,    KC_J,    KC_K,  KC_L,    XXXXXXX, XXXXXXX,
       SH_TG,   XXXXXXX, KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, SH_TG,
-                              /* XXXXXXX, KC_DEL,  KC_ENT,  _______, _______,   _______, KC_SPC,  KC_BSPC,  KC_TAB, XXXXXXX */
                               XXXXXXX, _______,  _______,  _______, _______,   _______, _______,  _______,  _______, XXXXXXX
     ),
 /*
@@ -166,12 +164,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    /* [_UNICODE] = LAYOUT( */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, SE_ARNG, */
-    /*   XXXXXXX, XXXXXXX, XP(SAD, VERY_SAD), XXXXXXX, XXXXXXX, XXXXXXX,                                     XP(HAPPY, VERY_HAPPY), X(THUMBD), X(THUMBU), X(LIGHTB), SE_ODIA, SE_ADIA, */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, X(CELEBRATE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-    /*                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX */
-    /* ), */
     // [_UNICODE] = LAYOUT(
     //   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, X(LIGHTB), XXXXXXX, XXXXXXX, XXXXXXX, SE_ARNG,
     //   XXXXXXX, XXXXXXX, XXXXXXX, XP(SAD, VERY_SAD), XXXXXXX, XXXXXXX,                    XP(HAPPY, VERY_HAPPY), X(THUMBD), X(THUMBU), XXXXXXX, SE_ODIA, SE_ADIA,
@@ -198,12 +190,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       XXXXXXX, KC_WH_D, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX,
                                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, _______, KC_MS_BTN1, KC_MS_BTN3, XXXXXXX
     ),
-    /* [_MOUSE] = LAYOUT( */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-    /*   XXXXXXX, KC_MS_ACCEL0, KC_MS_ACCEL1, KC_MS_ACCEL2, XXXXXXX, XXXXXXX,                              KC_MS_L, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       KC_MS_U, KC_WH_D, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX, */
-    /*                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, _______, KC_MS_BTN1, KC_MS_BTN3, XXXXXXX */
-    /* ), */
 /*
  * Colemak layer
  *
@@ -222,7 +208,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       MO(_ADJUST),  KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,                                                     KC_J,    KC_L,    KC_U,    KC_Y,    KC_COLN, KC_BSLS,
       MO(_MOUSE),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                     KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
       SH_OS,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
-      /* XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_TAB), XXXXXXX */
       XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    LCTL_T(KC_BSPC), KC_LSFT, LT(_LOWER, KC_SPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
 /*
