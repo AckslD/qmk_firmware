@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |  4   |  5   |  6   |  0   |                              |  H   |  J   |  K   |  L   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |  7   |  8   |  9   |      |      |      |  | ____ |      |      | PgDn | PgUp |      |      |        |
+ * | Swap H |      |  7   |  8   |  9   |      |      |      |  | ____ |      |      | PgDn | PgUp |      |      | Swap H |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      | Del  | Enter| ____ | ____ |  | ____ | Space| Tab  | Bksp |      |
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT(
       XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3, XXXXXXX,                                       KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
       XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6, KC_0,                                          KC_H,    KC_J,    KC_K,  KC_L,    XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, XXXXXXX,
+      SH_TG,   XXXXXXX, KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, SH_TG,
                               /* XXXXXXX, KC_DEL,  KC_ENT,  _______, _______,   _______, KC_SPC,  KC_BSPC,  KC_TAB, XXXXXXX */
                               XXXXXXX, _______,  _______,  _______, _______,   _______, _______,  _______,  _______, XXXXXXX
     ),
@@ -214,14 +214,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | Swap H |   Z  |   X  |   C  |   V  |   B  | RGB  | XXX  |  |Ctrsht|Qwerty|   K  |   M  | ,  < | . >  | /  ? |  _     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | ENC  | Del  | Enter| Esc  |      |  |      | Space| Bksp | Tab  | ENC  |
+ *                        | ENC  | Del  | Enter| Esc  |      |  | Bksp |      | Space| Tab  | ENC  |
  *                        |      | Raise| Lower| Meta | LAlt |  | LCtrl| LShft| Lower| Raise|      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_COLEMAK] = LAYOUT(
       MO(_ADJUST),  KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,                                                     KC_J,    KC_L,    KC_U,    KC_Y,    KC_COLN, KC_BSLS,
       MO(_MOUSE),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                     KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-      SH_TG,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
+      SH_OS,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
       /* XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_TAB), XXXXXXX */
       XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    LCTL_T(KC_BSPC), KC_LSFT, LT(_LOWER, KC_SPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
@@ -342,11 +342,8 @@ static void render_status(void) {
     }
 
     // TODO swap hands
-    oled_write_P(PSTR("Swapped: "), false);
     if (swap_hands) {
-        oled_write_P(PSTR("true"), false);
-    } else {
-        oled_write_P(PSTR("false"), false);
+        oled_write_P(PSTR("Swapped hands"), false);
     }
 
     // Host Keyboard LED Status
@@ -377,31 +374,31 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        if ((get_mods() & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT)) {
-            // if Alt -> Page up/Page down
-            if (clockwise) {
-                tap_code(KC_PGDN);
-            } else {
-                tap_code(KC_PGUP);
-            }
-        } else if ((get_mods() & MOD_BIT(KC_LSFT)) == MOD_BIT(KC_LSFT)) {
-            // if Shift -> Mouse scroll up/down faster
-            if (clockwise) {
-                for (int i=0; i<10; i++) {
-                    tap_code(KC_WH_D);
+        switch (get_highest_layer(layer_state)) {
+            case _LOWER:
+                if (clockwise) {
+                    tap_code(KC_PGDN);
+                } else {
+                    tap_code(KC_PGUP);
                 }
-            } else {
-                for (int i=0; i<10; i++) {
+                break;
+            case _RAISE:
+                if (clockwise) {
+                    for (int i=0; i<10; i++) {
+                        tap_code(KC_WH_D);
+                    }
+                } else {
+                    for (int i=0; i<10; i++) {
+                        tap_code(KC_WH_U);
+                    }
+                }
+                break;
+            default:
+                if (clockwise) {
+                    tap_code(KC_WH_D);
+                } else {
                     tap_code(KC_WH_U);
                 }
-            }
-        } else {
-            // otherwise -> Mouse scroll up/down
-            if (clockwise) {
-                tap_code(KC_WH_D);
-            } else {
-                tap_code(KC_WH_U);
-            }
         }
     }
     return true;
