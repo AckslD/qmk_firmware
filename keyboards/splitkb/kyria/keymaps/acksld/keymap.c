@@ -23,9 +23,14 @@ enum layers {
     _ADJUST,
     _RGB,
     // _UNICODE,
-    _MOUSE,
+    // _MOUSE,
+    _BRACKET,
     _QWERTY,
 };
+
+// enum custom_keycodes {
+//     BR_Q = SAFE_RANGE,
+// };
 
 // enum unicode_names {
 //     SAD,
@@ -60,15 +65,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | Swap H |   Z  |   X  |   C  |   V  |   B  |RGB   | XXX  |  |Ctrsht|Colmak|   N  |   M  | ,  < | . >  | /  ? |  _     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | ENC  | Del  | Enter| Esc  |      |  |      | Space| Bksp | Tab  | ENC  |
+ *                        | ENC  | Del  | Enter| Esc  |      |  | Bksp |      | Space| Tab  | ENC  |
  *                        |      | Raise| Lower| Meta | LAlt |  | LCtrl| LShft| Lower| Raise|      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
       MO(_ADJUST),  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-      MO(_MOUSE),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                      KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_QUOT,
-      SH_TG,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_COLEMAK), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
-      XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    KC_LCTRL, LSFT_T(KC_SPC), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_TAB), XXXXXXX
+      MO(_BRACKET),   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                                      KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_QUOT,
+      SH_OS,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_COLEMAK), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
+      XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    LCTL_T(KC_BSPC), KC_LSFT, LT(_LOWER, KC_SPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
 /*
  * Lower Layer: Symbols
@@ -94,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Raise Layer: Number keys, movement, repeat Space, Bksp etc
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |  1   |  2   |  3   |      |                              | Left | Down | Up   | Right|      |        |
+ * |        |McrSt |  1   |  2   |  3   |      |                              | Left | Down | Up   | Right|      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |  4   |  5   |  6   |  0   |                              |  H   |  J   |  K   |  L   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -105,8 +110,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RAISE] = LAYOUT(
-      XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3, XXXXXXX,                                       KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6, KC_0,                                          KC_H,    KC_J,    KC_K,  KC_L,    XXXXXXX, XXXXXXX,
+      XXXXXXX, DYN_REC_START1, KC_1,    KC_2,    KC_3, XXXXXXX,                                       KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
+      XXXXXXX, DYN_MACRO_PLAY1, KC_4,    KC_5,    KC_6, KC_0,                                          KC_H,    KC_J,    KC_K,  KC_L,    XXXXXXX, XXXXXXX,
       SH_TG,   XXXXXXX, KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, SH_TG,
                               XXXXXXX, _______,  _______,  _______, _______,   _______, _______,  _______,  _______, XXXXXXX
     ),
@@ -170,26 +175,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //   XXXXXXX, XXXXXXX, XXXXXXX, X(CELEBRATE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     // ),
-/*
- * mouse layer
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        | MACC0| MACC1| MACC2|      |      |                              | MLeft| Mdown| Mup  |MRight|      |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      | WHDwn| WHUp |      |      |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  | ____ | ____ | MLClk| MRClk|      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_MOUSE] = LAYOUT(
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX, KC_MS_ACCEL0, KC_MS_ACCEL1, KC_MS_ACCEL2, XXXXXXX, XXXXXXX,                              KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       XXXXXXX, KC_WH_D, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, _______, KC_MS_BTN1, KC_MS_BTN3, XXXXXXX
-    ),
+// /*
+//  * mouse layer
+//  *
+//  * ,-------------------------------------------.                              ,-------------------------------------------.
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+//  * |        | MACC0| MACC1| MACC2|      |      |                              | MLeft| Mdown| Mup  |MRight|      |        |
+//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |      |      |  |      |      |      | WHDwn| WHUp |      |      |        |
+//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+//  *                        |      |      |      |      |      |  | ____ | ____ | MLClk| MRClk|      |
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        `----------------------------------'  `----------------------------------'
+//  */
+//     [_MOUSE] = LAYOUT(
+//       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//       XXXXXXX, KC_MS_ACCEL0, KC_MS_ACCEL1, KC_MS_ACCEL2, XXXXXXX, XXXXXXX,                              KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
+//       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,       XXXXXXX, KC_WH_D, KC_WH_U, XXXXXXX, XXXXXXX, XXXXXXX,
+//                                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   _______, _______, KC_MS_BTN1, KC_MS_BTN3, XXXXXXX
+//     ),
+// /*
+//  * bracket layer
+//  *
+//  * ,-------------------------------------------.                              ,-------------------------------------------.
+//  * |        | BR_Q |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        `----------------------------------'  `----------------------------------'
+//  */
+//     [_BRACKET] = LAYOUT(
+//       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+//       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+//       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
 /*
  * Colemak layer
  *
@@ -206,7 +231,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_COLEMAK] = LAYOUT(
       MO(_ADJUST),  KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,                                                     KC_J,    KC_L,    KC_U,    KC_Y,    KC_COLN, KC_BSLS,
-      MO(_MOUSE),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                     KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+      MO(_BRACKET),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,                                                     KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
       SH_OS,        KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(_RGB),  XXXXXXX,    C_S_T(KC_NO), DF(_QWERTY), KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_UNDS,
       XXXXXXX, LT(_RAISE, KC_DEL), LT(_LOWER, KC_ENT), LGUI_T(KC_ESC), KC_LALT,    LCTL_T(KC_BSPC), KC_LSFT, LT(_LOWER, KC_SPC),  LT(_RAISE, KC_TAB), XXXXXXX
     ),
@@ -316,8 +341,11 @@ static void render_status(void) {
         // case _UNICODE:
         //     oled_write_P(PSTR("Unicode\n"), false);
         //     break;
-        case _MOUSE:
-            oled_write_P(PSTR("Mouse\n"), false);
+        // case _MOUSE:
+        //     oled_write_P(PSTR("Mouse\n"), false);
+        //     break;
+        case _BRACKET:
+            oled_write_P(PSTR("Brackes\n"), false);
             break;
         case _COLEMAK:
             oled_write_P(PSTR("Colemak\n"), false);
@@ -389,3 +417,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 #endif
+
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//     case BR_Q:
+//         if (record->event.pressed) {
+//             // when keycode QMKBEST is pressed
+//             SEND_STRING("]q");
+//         } else {
+//             // when keycode QMKBEST is released
+//         }
+//         break;
+//     }
+//     return true;
+// };

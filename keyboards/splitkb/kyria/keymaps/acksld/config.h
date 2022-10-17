@@ -16,6 +16,7 @@
 
 #pragma once
 
+// #define TAPPING_TERM 120
 #define PERMISSIVE_HOLD // trigger mod if another key pressed even if within tapping term
 /* #define IGNORE_MOD_TAP_INTERRUPT // help with rolling motion eg for space after letter */
 // effectively enables permissive hold also for layers
