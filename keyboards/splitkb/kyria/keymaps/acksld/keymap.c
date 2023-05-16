@@ -110,8 +110,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RAISE] = LAYOUT(
-      XXXXXXX, DYN_REC_START1, KC_1,    KC_2,    KC_3, XXXXXXX,                                       KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
-      XXXXXXX, DYN_MACRO_PLAY1, KC_4,    KC_5,    KC_6, KC_0,                                          KC_H,    KC_J,    KC_K,  KC_L,    XXXXXXX, XXXXXXX,
+      XXXXXXX, DM_REC1, KC_1,    KC_2,    KC_3, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, DM_PLY1, KC_4,    KC_5,    KC_6, KC_0,                                          KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
       SH_TG,   XXXXXXX, KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, SH_TG,
                               XXXXXXX, _______,  _______,  _______, _______,   _______, _______,  _______,  _______, XXXXXXX
     ),
@@ -130,10 +130,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_ADJUST] = LAYOUT(
-      XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                                         KC_F6,   KC_F7,   KC_F8,  KC_F9,   KC_F10,  XXXXXXX,
-      XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                       KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_F11,  XXXXXXX,
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDOWN, KC_PGUP, XXXXXXX, KC_F12,  XXXXXXX,
-                                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, _______, KC_PSCR, XXXXXXX, XXXXXXX
+      XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,                                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,                                       KC_MPRV, KC_MPLY, KC_MUTE,  KC_MNXT, KC_F11,  XXXXXXX,
+      XXXXXXX, XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12, XXXXXXX, XXXXXXX,   _______, XXXXXXX, XXXXXXX, KC_VOLD, KC_VOLU, XXXXXXX, KC_F12,  XXXXXXX,
+                                 XXXXXXX, _______, _______, _______, _______,   _______, _______, KC_PSCR, _______, XXXXXXX
     ),
 /*
  * LED RGB layer
@@ -366,13 +366,14 @@ static void render_status(void) {
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     // } else {
         /* render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc) */
         /* render_kyria_logo(); */
     }
+    return false;
 }
 #endif
 
